@@ -1,10 +1,22 @@
 import axios from 'axios';
 
-// Node.js Express Backend Base URL configured via environment variable
-const baseURL = import.meta.env.VITE_API_URL || '/api';
+/**
+ * Centralized Axios API client.
+ * Normalizes import.meta.env.VITE_API_URL to ensure the '/api' prefix is attached
+ * to match Express backend route mount points (/api/auth, /api/users, /api/predictions).
+ */
+const getBaseURL = () => {
+  const rawUrl = import.meta.env.VITE_API_URL;
+  if (!rawUrl) return '/api';
+  const cleanUrl = rawUrl.replace(/\/+$/, '');
+  if (cleanUrl.endsWith('/api')) {
+    return cleanUrl;
+  }
+  return `${cleanUrl}/api`;
+};
 
 const API = axios.create({
-  baseURL,
+  baseURL: getBaseURL(),
   headers: {
     'Content-Type': 'application/json'
   }
@@ -35,3 +47,4 @@ API.interceptors.response.use(
 );
 
 export default API;
+

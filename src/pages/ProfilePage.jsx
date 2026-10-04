@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { DashboardLayout } from '../layouts/DashboardLayout';
 import { useAuth } from '../context/AuthContext';
+import { userService } from '../services/userService';
 import { formatDate } from '../utils/formatters';
 import { Shield, Key, Save, CheckCircle2, Lock } from 'lucide-react';
 
@@ -9,13 +10,17 @@ export const ProfilePage = () => {
   const [name, setName] = useState(user?.name || '');
   const [saving, setSaving] = useState(false);
 
-  const handleUpdate = (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
     setSaving(true);
-    setTimeout(() => {
-      setSaving(false);
+    try {
+      await userService.updateProfile({ name });
       addToast('Profile updated successfully.', 'success');
-    }, 400);
+    } catch (err) {
+      addToast(err.response?.data?.message || 'Failed to update profile.', 'error');
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
