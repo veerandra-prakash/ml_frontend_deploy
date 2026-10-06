@@ -116,10 +116,10 @@ export const ShapExplanationCard = ({ explanation = {}, prediction = null }) => 
             
             {/* Positive Drivers (+ Quote) */}
             <div className="space-y-3">
-              <div className="flex items-center justify-between pb-1 border-b border-rose-200">
-                <div className="flex items-center gap-1.5 text-rose-700 font-bold text-xs uppercase tracking-wider font-mono">
+              <div className="flex items-center justify-between pb-1 border-b border-emerald-200">
+                <div className="flex items-center gap-1.5 text-emerald-700 font-bold text-xs uppercase tracking-wider font-mono">
                   <TrendingUp className="w-3.5 h-3.5" />
-                  <span>Cost-Increasing Factors (+ Quote)</span>
+                  <span>Positive Feature Attributions (+ Quote)</span>
                 </div>
                 <span className="text-[11px] font-mono text-slate-500">{positiveDrivers.length} factors</span>
               </div>
@@ -137,13 +137,13 @@ export const ShapExplanationCard = ({ explanation = {}, prediction = null }) => 
                         <div className="flex items-center justify-between text-xs">
                           <span className="font-semibold text-slate-900">{item.label}</span>
                           <div className="text-right">
-                            <span className="font-mono font-bold text-rose-600">+{formatCurrency(item.shapVal)}</span>
+                            <span className="font-mono font-bold text-emerald-600">+{formatCurrency(item.shapVal)}</span>
                             <span className="text-[10px] text-slate-500 ml-1 font-mono">({relativePct}%)</span>
                           </div>
                         </div>
 
                         <div className="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                          <div style={{ width: `${barWidth}%` }} className="h-full bg-rose-600 rounded-full" />
+                          <div style={{ width: `${barWidth}%` }} className="h-full bg-emerald-600 rounded-full" />
                         </div>
                       </div>
                     );
@@ -154,10 +154,10 @@ export const ShapExplanationCard = ({ explanation = {}, prediction = null }) => 
 
             {/* Negative Drivers (- Quote) */}
             <div className="space-y-3">
-              <div className="flex items-center justify-between pb-1 border-b border-emerald-200">
-                <div className="flex items-center gap-1.5 text-emerald-700 font-bold text-xs uppercase tracking-wider font-mono">
+              <div className="flex items-center justify-between pb-1 border-b border-rose-200">
+                <div className="flex items-center gap-1.5 text-rose-700 font-bold text-xs uppercase tracking-wider font-mono">
                   <TrendingDown className="w-3.5 h-3.5" />
-                  <span>Cost-Reducing Factors (- Quote)</span>
+                  <span>Negative Feature Attributions (- Quote)</span>
                 </div>
                 <span className="text-[11px] font-mono text-slate-500">{negativeDrivers.length} factors</span>
               </div>
@@ -175,13 +175,13 @@ export const ShapExplanationCard = ({ explanation = {}, prediction = null }) => 
                         <div className="flex items-center justify-between text-xs">
                           <span className="font-semibold text-slate-900">{item.label}</span>
                           <div className="text-right">
-                            <span className="font-mono font-bold text-emerald-600">{formatCurrency(item.shapVal)}</span>
+                            <span className="font-mono font-bold text-rose-600">{formatCurrency(item.shapVal)}</span>
                             <span className="text-[10px] text-slate-500 ml-1 font-mono">({relativePct}%)</span>
                           </div>
                         </div>
 
                         <div className="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                          <div style={{ width: `${barWidth}%` }} className="h-full bg-emerald-600 rounded-full" />
+                          <div style={{ width: `${barWidth}%` }} className="h-full bg-rose-600 rounded-full" />
                         </div>
                       </div>
                     );
@@ -220,17 +220,17 @@ export const ShapExplanationCard = ({ explanation = {}, prediction = null }) => 
                     {isPositive ? (
                       <div
                         style={{ left: '50%', width: `${barWidth}%` }}
-                        className="absolute h-3 bg-rose-600 rounded-r"
+                        className="absolute h-3 bg-emerald-600 rounded-r"
                       />
                     ) : (
                       <div
                         style={{ right: '50%', width: `${barWidth}%` }}
-                        className="absolute h-3 bg-emerald-600 rounded-l"
+                        className="absolute h-3 bg-rose-600 rounded-l"
                       />
                     )}
                   </div>
 
-                  <div className={`col-span-2 text-right font-mono font-bold ${isPositive ? 'text-rose-600' : 'text-emerald-600'}`}>
+                  <div className={`col-span-2 text-right font-mono font-bold ${isPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
                     {isPositive ? `+${formatCurrency(item.shapVal)}` : formatCurrency(item.shapVal)}
                   </div>
 
@@ -264,13 +264,13 @@ export const ShapExplanationCard = ({ explanation = {}, prediction = null }) => 
                     <td className="py-3 px-4">
                       <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[10px] font-bold font-mono ${
                         isPositive 
-                          ? 'bg-rose-50 text-rose-700 border border-rose-200' 
-                          : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' 
+                          : 'bg-rose-50 text-rose-700 border border-rose-200'
                       }`}>
                         {isPositive ? 'Positive Shift' : 'Negative Shift'}
                       </span>
                     </td>
-                    <td className={`py-3 px-4 font-mono font-bold ${isPositive ? 'text-rose-600' : 'text-emerald-600'}`}>
+                    <td className={`py-3 px-4 font-mono font-bold ${isPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
                       {isPositive ? `+${formatCurrency(item.shapVal)}` : formatCurrency(item.shapVal)}
                     </td>
                     <td className="py-3 px-4 font-mono text-slate-600">{relativePct}%</td>

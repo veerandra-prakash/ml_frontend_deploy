@@ -29,7 +29,7 @@ export const generatePDFReport = ({ prediction, modelVersion = '1.0.0', date, in
     return `
       <tr>
         <td style="padding: 6px 12px; border-bottom: 1px solid #e2e8f0; text-transform: capitalize;">${feat.replace(/_/g, ' ')}</td>
-        <td style="padding: 6px 12px; border-bottom: 1px solid #e2e8f0; text-align: right; font-weight: bold; color: ${isPos ? '#dc2626' : '#16a34a'};">
+        <td style="padding: 6px 12px; border-bottom: 1px solid #e2e8f0; text-align: right; font-weight: bold; color: ${isPos ? '#16a34a' : '#dc2626'};">
           ${isPos ? '+' : ''}$${numVal.toFixed(2)}
         </td>
       </tr>
