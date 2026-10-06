@@ -103,6 +103,8 @@ export const PredictionDetailsPage = () => {
           prediction={predictedPremium}
           modelVersion={modelVersion}
           date={createdAt}
+          inputFeatures={inputFeatures}
+          explanation={explanationObj}
         />
 
         {/* SHAP Visualizer */}

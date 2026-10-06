@@ -314,6 +314,8 @@ export const PredictPage = () => {
               prediction={predictionResult.prediction}
               modelVersion={predictionResult.modelVersion}
               date={predictionResult.createdAt}
+              inputFeatures={predictionResult.inputFeatures || formData}
+              explanation={predictionResult.explanation}
             />
 
             <ShapExplanationCard explanation={predictionResult.explanation} />

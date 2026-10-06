@@ -2,8 +2,9 @@ import React from 'react';
 import { formatCurrency } from '../utils/formatters';
 import { Shield, DollarSign, Calendar, Cpu, TrendingUp, AlertTriangle, CheckCircle2, Download } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { generatePDFReport } from '../utils/pdfGenerator';
 
-export const PredictionResultCard = ({ prediction, modelVersion = '1.0.0', date }) => {
+export const PredictionResultCard = ({ prediction, modelVersion = '1.0.0', date, inputFeatures, explanation }) => {
   const { addToast } = useAuth();
   const annual = prediction || 0;
   const monthly = annual / 12;
@@ -18,7 +19,8 @@ export const PredictionResultCard = ({ prediction, modelVersion = '1.0.0', date 
   const RiskIcon = riskTier.icon;
 
   const handleExport = () => {
-    addToast('Actuarial Quote PDF report exported.', 'success');
+    generatePDFReport({ prediction, modelVersion, date, inputFeatures, explanation });
+    addToast('Opening printable PDF quote report...', 'success');
   };
 
   return (
