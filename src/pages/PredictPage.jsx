@@ -219,12 +219,20 @@ export const PredictPage = () => {
     }
 
     setLoading(true);
-    setLoadingStage('Connecting to Express API Gateway...');
+    setLoadingStage('Preparing AI prediction...');
+
+    const stages = [
+      { delay: 3500, text: 'AI service is starting. This may take a few seconds...' },
+      { delay: 10000, text: 'Connecting to XGBoost ML service on Render...' },
+      { delay: 20000, text: 'Loading production model & SHAP TreeExplainer...' },
+      { delay: 35000, text: 'Finalizing actuarial risk attributions...' }
+    ];
+
+    const stageTimers = stages.map((stage) =>
+      setTimeout(() => setLoadingStage(stage.text), stage.delay)
+    );
 
     try {
-      setTimeout(() => setLoadingStage('Executing XGBoost Actuarial Model...'), 400);
-      setTimeout(() => setLoadingStage('Computing SHAP TreeExplainer Attributions...'), 800);
-
       const response = await predictionService.createPrediction(formData);
       
       const resultData = response.data;
@@ -234,10 +242,11 @@ export const PredictPage = () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err) {
       console.error('Prediction Submission Error:', err);
-      const msg = err.response?.data?.message || 'Failed to calculate prediction quote. Please check your network and backend services.';
+      const msg = err.response?.data?.message || 'AI prediction service is temporarily unavailable. Please try again in a moment.';
       setError(msg);
       addToast(msg, 'error');
     } finally {
+      stageTimers.forEach((timer) => clearTimeout(timer));
       setLoading(false);
       setLoadingStage('');
     }

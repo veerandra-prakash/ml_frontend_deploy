@@ -20,9 +20,11 @@ export const Sidebar = () => {
     const checkML = async () => {
       try {
         const res = await predictionService.getMLHealth();
-        setMlStatus({ online: res.data?.model_loaded || false, loading: false });
+        const data = res.data || res;
+        const isOnline = data.model_loaded || data.status === 'ok';
+        setMlStatus({ online: isOnline, waking: data.status === 'unavailable', loading: false });
       } catch (e) {
-        setMlStatus({ online: false, loading: false });
+        setMlStatus({ online: false, waking: true, loading: false });
       }
     };
     checkML();
@@ -118,7 +120,7 @@ export const Sidebar = () => {
             <div className="flex items-center gap-2">
               <span
                 className={`w-2 h-2 rounded-full ${
-                  mlStatus.online ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500'
+                  mlStatus.online ? 'bg-emerald-500 animate-pulse' : mlStatus.waking ? 'bg-amber-500 animate-pulse' : 'bg-rose-500'
                 }`}
               ></span>
               <span className="text-[11px] font-semibold text-slate-800">
@@ -126,7 +128,7 @@ export const Sidebar = () => {
                   ? 'Verifying...'
                   : mlStatus.online
                   ? 'XGBoost Microservice'
-                  : 'FastAPI Offline'}
+                  : 'FastAPI (Standby / Auto-Wake)'}
               </span>
             </div>
 
